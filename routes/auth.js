@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
 // Register
-
 router.post("/register", async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -24,7 +23,6 @@ router.post("/register", async (req, res) => {
 });
 
 // Login
-
 router.post("/login", async (req, res) => {
   try {
     const user = User.findOne({ username: req.body.username });
@@ -33,7 +31,7 @@ router.post("/login", async (req, res) => {
     const validated = await bcrypt.compare(req.body.password, user.password);
     !validated && res.status(400).json("Worng credentials!");
 
-    const {password, ...others} = user
+    const { password, ...others } = user;
 
     res.status(200).json(others);
   } catch (err) {
